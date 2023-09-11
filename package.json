@@ -1,0 +1,15 @@
+{
+  "name": "evergreen-notes-markdown-website",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:unstaticlabs/evergreen-notes-markdown-website.git",
+  "author": "unstatic labs <noreply@unstaticlabs.com>",
+  "contributors": [
+    "Valentin Viennot <valentinviennot@users.noreply.github.com>",
+    "Roger Miret Giné <rogerxaic@users.noreply.github.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "obsidian-index-wikilinks": "https://github.com/ValentinViennot/np-obsidian-index-wikilinks.git"
+  }
+}
