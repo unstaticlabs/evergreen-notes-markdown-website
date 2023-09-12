@@ -1,3 +1,5 @@
+import Config from "../../config.json";
+
 let instance;
 let notes = {};
 let index = {};
@@ -17,7 +19,7 @@ class DB {
   }
 
   async loadIndex() {
-    const data = await fetch("./notes/index.json");
+    const data = await fetch(`./${Config.index}`);
     const json = await data.json();
     index = json;
     globalResolve();

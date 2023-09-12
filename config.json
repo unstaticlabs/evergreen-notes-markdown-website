@@ -1,5 +1,6 @@
 {
   "title": "My notes",
+  "index": "notes/index.json",
   "notes": [
     {
       "title": "Note 1",
