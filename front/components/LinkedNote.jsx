@@ -17,7 +17,7 @@ function LinkedNote({ path }) {
   }, [path]);
 
   return (
-    <a href={`${base}/${path}`}>
+    <a href={`${base}/${encodeURIComponent(path)}`}>
       <div className="LinkedNote Backlink">
         <p className="Title">{note.title}</p>
         <p className="Preview">
