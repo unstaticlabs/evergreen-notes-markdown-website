@@ -9,9 +9,9 @@ function Header() {
   return (
     <header id="header">
       <h1>{Config.title}</h1>
-      {(Config.notes ?? []).map((n) => (
-        <a key={n.link} className="noteLink" href={`${base}/${n.link}`}>
-          {n.title}
+      {(Config.bookmarks ?? []).map((noteIndex) => (
+        <a key={noteIndex} className="noteLink" href={`${base}/${noteIndex}`}>
+          {noteIndex}
         </a>
       ))}
     </header>

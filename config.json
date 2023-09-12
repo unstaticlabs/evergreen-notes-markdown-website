@@ -1,10 +1,7 @@
 {
   "title": "My notes",
   "index": "notes/index.json",
-  "notes": [
-    {
-      "title": "Note 1",
-      "link": "note1"
-    }
+  "bookmarks": [
+    "note1"
   ]
 }

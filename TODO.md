@@ -4,7 +4,7 @@
 - [x] add config (to change title, where notes are stored...) / anything that is hard-coded
 - [ ] preview note on link hover
 - [ ] improve "Links to this note" summaries
-- [ ] default index
+- [x] default index
 - [ ] click bookmark doesnt't work
 - [ ] links to this note empty?
 - [ ] empty page: 404?
