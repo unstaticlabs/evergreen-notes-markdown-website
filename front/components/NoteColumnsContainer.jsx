@@ -4,6 +4,7 @@ import { useLocation, useParams } from "react-router-dom";
 
 import "./NoteColumnsContainer.scss";
 import NoteContainer from "./NoteContainer";
+import Db from "../db/Db";
 
 const NOTE_WIDTH = 585;
 
@@ -16,6 +17,7 @@ function useQuery() {
 function NoteColumnsContainer({ scroll }) {
   const { entrypoint } = useParams();
   const [notePaths, setNotePaths] = useState([entrypoint]);
+  const [title, setTitle] = useState("");
 
   let query = useQuery();
 
@@ -24,6 +26,18 @@ function NoteColumnsContainer({ scroll }) {
       [entrypoint, ...query.getAll("stacked")].map((e) => decodeURIComponent(e))
     );
   }, [entrypoint, query]);
+
+  useEffect(() => {
+    const updateTitle = async () => {
+      const notes = await Promise.all(notePaths.map((n) => Db.getNote(n)));
+      setTitle(notes.map((n) => n.title).join(" | "));
+    };
+    updateTitle();
+  }, [notePaths]);
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
 
   return (
     <div className="NoteColumnsContainer">
