@@ -4,3 +4,14 @@
 - [x] add config (to change title, where notes are stored...) / anything that is hard-coded
 - [ ] preview note on link hover
 - [ ] improve "Links to this note" summaries
+- [ ] default index
+- [ ] click bookmark doesnt't work
+- [ ] links to this note empty?
+- [ ] empty page: 404?
+- [ ] note index array --> show menu?
+- [ ] mobile display
+- [ ] links dont work
+- [ ] handle link formats
+- [ ] handle broken links
+- [ ] actual links don't work
+- [ ] MANY requests for same file + lazyloading
