@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { useSearchParams, useParams } from "react-router-dom";
+import { useSearchParams, useParams, useHref } from "react-router-dom";
 
 import "./NoteContainer.scss";
 import Db from "../db/Db";
@@ -13,6 +13,8 @@ function NoteContainer({ style, verticalMode, overlay, path }) {
   const { entrypoint } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const base = useHref("/");
+
   useEffect(() => {
     const getNoteAndParseLinks = async () => {
       const note = await Db.getNote(path);
@@ -21,7 +23,7 @@ function NoteContainer({ style, verticalMode, overlay, path }) {
         content: `# ${note.title}\n\n${note.content}`.replaceAll(
           /\[\[([^\]]*)\]\]/g,
           (_match, group1) => {
-            return `[${group1}](/${encodeURIComponent(group1)})`;
+            return `[${group1}](${base}/${encodeURIComponent(group1)})`;
           }
         ),
       });
@@ -41,7 +43,9 @@ function NoteContainer({ style, verticalMode, overlay, path }) {
 
   const handleClick = (e) => {
     const extractPathAndAddToStack = (targetA) => {
-      const notePath = targetA.pathname.slice(1);
+      const notePath = targetA.pathname.slice(
+        base.length === 1 ? 1 : base.length + 1
+      );
 
       const currentPaths = searchParams
         .getAll("stacked")

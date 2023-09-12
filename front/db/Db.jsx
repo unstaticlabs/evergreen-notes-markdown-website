@@ -17,7 +17,7 @@ class DB {
   }
 
   async loadIndex() {
-    const data = await fetch("/notes/index.json");
+    const data = await fetch("./notes/index.json");
     const json = await data.json();
     index = json;
     globalResolve();
@@ -28,7 +28,7 @@ class DB {
     const data = await Promise.all(
       arrOfPaths.map((path) => {
         const note = index[path];
-        return fetch(`/${note.path}`);
+        return fetch(`./${note.path}`);
       })
     );
     const json = await Promise.all(data.map((d) => d.text()));
