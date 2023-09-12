@@ -2000,7 +2000,7 @@ object.values@^1.1.6:
 
 "obsidian-index-wikilinks@https://github.com/ValentinViennot/np-obsidian-index-wikilinks.git":
   version "0.0.1"
-  resolved "https://github.com/ValentinViennot/np-obsidian-index-wikilinks.git#2c8093d12c026ca081aa4a8325fb4ecc8a36e2ad"
+  resolved "https://github.com/ValentinViennot/np-obsidian-index-wikilinks.git#3a847b624443f514a167fbee6b900a4e53fa1ac2"
 
 once@^1.3.0:
   version "1.4.0"

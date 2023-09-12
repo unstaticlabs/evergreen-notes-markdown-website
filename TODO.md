@@ -11,7 +11,7 @@
 - [ ] note index array --> show menu?
 - [ ] mobile display
 - [x] links dont work
-- [ ] handle link formats
+- [x] handle link formats
 - [ ] handle broken links
 - [x] actual links don't work
 - [x] replace "scroll" console.log and implement scroll when clicking a link

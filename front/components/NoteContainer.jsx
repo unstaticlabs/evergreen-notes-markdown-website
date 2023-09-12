@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { useSearchParams, useParams, useHref } from "react-router-dom";
+import { WIKILINKSregex as WIKILINKSregex } from "obsidian-index-wikilinks/dist/lib/wikilinkRegex"
 
 import "./NoteContainer.scss";
 import Db from "../db/Db";
@@ -22,9 +23,9 @@ function NoteContainer({ style, verticalMode, overlay, path, scrollToNote }) {
       setNote({
         ...note,
         content: `# ${note.title}\n\n${note.content}`.replaceAll(
-          /\[\[([^\]]*)\]\]/g,
-          (_match, group1) => {
-            return `[${group1}](${base}/${encodeURIComponent(group1)})`;
+          WIKILINKSregex,
+          (_match, index, _block, title) => {
+            return `[${title ?? index}](${base}/${encodeURIComponent(index)})`;
           }
         ),
       });
