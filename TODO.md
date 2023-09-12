@@ -5,7 +5,7 @@
 - [ ] preview note on link hover
 - [ ] improve "Links to this note" summaries
 - [x] default index
-- [ ] click bookmark doesnt't work
+- [x] click bookmark doesnt't work
 - [x] links to this note empty?
 - [ ] empty page: 404?
 - [ ] note index array --> show menu?
