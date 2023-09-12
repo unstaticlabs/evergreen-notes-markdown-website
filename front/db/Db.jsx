@@ -1,56 +1,48 @@
-import Config from "../../config.json";
+import Config from "../../config.json"
 
-let instance;
-let notes = {};
-let index = {};
-
-let globalResolve;
-let globalPromise = new Promise((resolve) => {
-  globalResolve = resolve;
-});
+const _loadNoteContent = async (note) => {
+  return await (
+    (!!note && !!note.path) ? fetch(`./${note.path}`) : fetch('./404.md')
+  )
+}
 
 class DB {
+
+  _notesContent
+  _notesIndex
+
   constructor() {
-    if (instance) {
-      throw new Error("You can only create one instance!");
-    }
-    instance = this;
-    this.loadIndex();
+    this._notesContent = {}
+    this._index()
   }
 
-  async loadIndex() {
-    const data = await fetch(`./${Config.index}`);
-    const json = await data.json();
-    index = json;
-    globalResolve();
+  async _index() {
+    return this._notesIndex ?? await this._loadIndex()
   }
 
-  async load(arrOfPaths) {
-    await globalPromise;
-    const data = await Promise.all(
-      arrOfPaths.map((path) => {
-        const note = index[path];
-        if (!!note && !!note.path)
-          return fetch(`./${note.path}`);
-        return fetch('./404.md');
-      })
-    );
-    const json = await Promise.all(data.map((d) => d.text()));
-
-    json.forEach((n, index) =>
-      Object.assign(notes, { [arrOfPaths[index]]: n })
-    );
+  async _loadIndex() {
+    const data = await fetch(`./${Config.index}`)
+    const json = await data.json()
+    this._notesIndex = json
+    return this._notesIndex
   }
 
-  getInstance() {
-    return this;
+  async _getOrLoadNote(noteId) {
+    const index = await this._index()
+    if (noteId in this._notesContent)
+      return this._notesContent[noteId]
+    const response = await _loadNoteContent(index[noteId])
+    const content = await response.text()
+    const noteWithContent = { ...index[noteId], id: noteId, content }
+    this._notesContent[noteId] = noteWithContent
+    return noteWithContent
   }
 
-  async getNote(path) {
-    await this.load([path]);
-    return { ...index[path], content: notes[path] };
+  async getNote(noteId) {
+    return await this._getOrLoadNote(noteId)
   }
 }
 
-const singletonDB = Object.freeze(new DB());
-export default singletonDB;
+const singletonDB = new DB()
+
+export default singletonDB

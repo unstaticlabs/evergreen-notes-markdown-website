@@ -1,26 +1,16 @@
 /* eslint-disable react/prop-types */
 import "./LinkedNote.scss";
 
-import Db from "../db/Db";
-import { useEffect, useState } from "react";
 import { useHref } from "react-router";
 
-function LinkedNote({ path }) {
-  const [note, setNote] = useState({});
+const LinkedNote = ({ noteId }) => {
   const _base = useHref("/");
   const base = _base === '/' ? '' : _base
 
-  useEffect(() => {
-    const a = async () => {
-      setNote(await Db.getNote(path));
-    };
-    a();
-  }, [path]);
-
   return (
-    <a href={`${base}/${encodeURIComponent(path)}`}>
+    <a href={`${base}/${encodeURIComponent(noteId)}`}>
       <div className="LinkedNote Backlink">
-        <p className="Title">{note.title}</p>
+        <p className="Title">{noteId}</p>
       </div>
     </a>
   );

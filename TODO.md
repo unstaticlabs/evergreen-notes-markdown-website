@@ -15,7 +15,7 @@
 - [x] handle broken links
 - [x] actual links don't work
 - [x] replace "scroll" console.log and implement scroll when clicking a link
-- [ ] MANY requests for same file + lazyloading
+- [x] MANY requests for same file + lazyloading
 - [ ] Highlight open links
 
 

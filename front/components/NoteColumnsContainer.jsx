@@ -14,31 +14,34 @@ function useQuery() {
   return useMemo(() => new URLSearchParams(search), [search]);
 }
 
-function NoteColumnsContainer({ scroll, scrollToAmount }) {
+const NoteColumnsContainer = ({ scroll, scrollToAmount }) => {
   const { entrypoint } = useParams();
-  const [notePaths, setNotePaths] = useState([entrypoint]);
+  const [noteIds, setNoteIds] = useState([entrypoint]);
   const [title, setTitle] = useState("");
+  const [notes, setNotes] = useState([]);
 
   let query = useQuery();
 
   const handleScrollToNote = (notePath) => {
-    const index = notePaths.indexOf(notePath);
+    const index = noteIds.indexOf(notePath);
     scrollToAmount(index * NOTE_WIDTH)
   }
 
   useEffect(() => {
-    setNotePaths(
+    setNoteIds(
       [entrypoint, ...query.getAll("stacked")].map((e) => decodeURIComponent(e))
     );
   }, [entrypoint, query]);
 
   useEffect(() => {
-    const updateTitle = async () => {
-      const notes = await Promise.all(notePaths.map((n) => Db.getNote(n)));
-      setTitle(notes.map((n) => n.title).join(" | "));
-    };
-    updateTitle();
-  }, [notePaths]);
+    Promise.all(noteIds.map((n) => Db.getNote(n))).then(
+      notes => setNotes(notes)
+    )
+  }, [noteIds]);
+
+  useEffect(() => {
+    setTitle(notes.map((n) => n.title).join(" | "));
+  }, [notes]);
 
   useEffect(() => {
     document.title = title;
@@ -46,9 +49,9 @@ function NoteColumnsContainer({ scroll, scrollToAmount }) {
 
   return (
     <div className="NoteColumnsContainer">
-      {notePaths.map((path, index) => {
+      {notes.map((note, index) => {
         const noteTropAGauche = scroll > NOTE_WIDTH * (index + 1) - 80;
-        const lastNote = index === notePaths.length - 1;
+        const lastNote = index === noteIds.length - 1;
         return (
           <NoteContainer
             verticalMode={
@@ -56,18 +59,19 @@ function NoteColumnsContainer({ scroll, scrollToAmount }) {
               (lastNote &&
                 window.innerWidth +
                 scroll -
-                NOTE_WIDTH * (notePaths.length - 1) <
+                NOTE_WIDTH * (noteIds.length - 1) <
                 150 &&
-                scroll < NOTE_WIDTH * (notePaths.length - 2) - 65)
+                scroll < NOTE_WIDTH * (noteIds.length - 2) - 65)
             }
             overlay={
               scroll > Math.max(NOTE_WIDTH * (index - 1), 0) ||
-              (lastNote && scroll < NOTE_WIDTH * (notePaths.length - 2) - 400)
+              (lastNote && scroll < NOTE_WIDTH * (noteIds.length - 2) - 400)
             }
             style={{ left: `${index * 40}px`, right: `-${NOTE_WIDTH}px` }}
-            key={path}
-            path={path}
+            note={note}
+            noteIdsStack={noteIds.slice(1)}
             scrollToNote={handleScrollToNote}
+            key={note.path ?? '.404'}
           />
         );
       })}

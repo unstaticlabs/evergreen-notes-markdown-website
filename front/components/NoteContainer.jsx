@@ -1,87 +1,74 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import { useSearchParams, useParams, useHref } from "react-router-dom";
+import { useEffect, useState } from "react"
+import ReactMarkdown from "react-markdown"
+import { useSearchParams, useParams, useHref } from "react-router-dom"
 import { WIKILINKSregex as WIKILINKSregex } from "obsidian-index-wikilinks/dist/lib/wikilinkRegex"
 
-import "./NoteContainer.scss";
-import Db from "../db/Db";
-import Footer from "./Footer";
+import Footer from "./Footer"
 
-function NoteContainer({ style, verticalMode, overlay, path, scrollToNote }) {
-  const [note, setNote] = useState({ index: 0 });
+import "./NoteContainer.scss"
 
-  const { entrypoint } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
+const NoteContainer = ({ style, verticalMode, overlay, note, noteIdsStack, scrollToNote }) => {
 
-  const _base = useHref("/");
+  const [noteContent, setNoteContent] = useState("Loading...")
+
+  const { entrypoint } = useParams()
+  const setSearchParams = useSearchParams()[1]
+
+  const _base = useHref("/")
   const base = _base === '/' ? '' : _base
 
   useEffect(() => {
-    const getNoteAndParseLinks = async () => {
-      const note = await Db.getNote(path);
-      setNote({
-        ...note,
-        content: `# ${note.title ?? ''}\n\n${note.content}`.replaceAll(
-          WIKILINKSregex,
-          (_match, index, _block, title) => {
-            return `[${title ?? index}](${base}/${encodeURIComponent(index)})`;
-          }
-        ),
-      });
-    };
-    getNoteAndParseLinks();
-  }, [path]);
+    setNoteContent(
+      `# ${note.title ?? ''}\n\n${note.content}`.replaceAll(
+        WIKILINKSregex,
+        (_match, index, _block, title) => {
+          return `[${title ?? index}](${base}/${encodeURIComponent(index)})`
+        }
+      ))
+  }, [note, base])
 
   const findParentA = (target, count = 5) => {
-    if (target.nodeName.toLowerCase() === "a") {
-      return target;
+    if (target.nodeName.toLowerCase() === "a")
+      return target
+    if (count === 0)
+      return null
+    return findParentA(target.parentNode, count - 1)
+  }
+
+  const isLinkRemote = (targetA) =>
+    (new URL(document.baseURI).origin !== new URL(targetA.href, document.baseURI).origin)
+
+  const extractPathAndAddToStack = (targetA) => {
+    const notePath = targetA.pathname.slice(
+      base.length === 1 ? 1 : base.length + 1
+    )
+    if (noteIdsStack.includes(notePath) || entrypoint === notePath) {
+      scrollToNote(notePath)
+    } else {
+      const index = noteIdsStack.indexOf(note.id);
+      setSearchParams({
+        stacked: [...noteIdsStack.slice(0, index + 1), notePath],
+      })
     }
-    if (count === 0) {
-      return null;
-    }
-    return findParentA(target.parentNode, count - 1);
-  };
+  }
 
   const handleClick = (e) => {
-    const isLinkRemote = (targetA) => {
-      return new URL(document.baseURI).origin !== new URL(targetA.href, document.baseURI).origin;
-    }
-
-    const extractPathAndAddToStack = (targetA) => {
-      const notePath = targetA.pathname.slice(
-        base.length === 1 ? 1 : base.length + 1
-      );
-
-      const currentPaths = searchParams
-        .getAll("stacked")
-        .map((e) => decodeURIComponent(e));
-
-      if (currentPaths.includes(notePath) || entrypoint === notePath) {
-        scrollToNote(notePath);
-      } else {
-        const index = currentPaths.indexOf(path);
-        setSearchParams({
-          stacked: [...currentPaths.slice(0, index + 1), notePath],
-        });
-      }
-    };
-
     if (e.target.nodeName.toLowerCase() === "a") {
       if (!e.metaKey && !e.shiftKey && !e.ctrlKey && !e.altKey) {
         if (!isLinkRemote(e.target)) {
-          e.preventDefault();
-          extractPathAndAddToStack(e.target);
+          e.preventDefault()
+          extractPathAndAddToStack(e.target)
         }
       }
     } else {
-      e.preventDefault();
-      const target = findParentA(e.target);
+      const target = findParentA(e.target)
       if (target) {
-        extractPathAndAddToStack(target);
+        e.preventDefault()
+        extractPathAndAddToStack(target)
       }
     }
-  };
+  }
 
   return (
     <main className={`NoteContainer ${overlay ? "Overlay" : ""}`} style={style}>
@@ -93,11 +80,11 @@ function NoteContainer({ style, verticalMode, overlay, path, scrollToNote }) {
           <div className="PrimaryNote">
             <div>
               <div className="MarkdownContainer">
-                <ReactMarkdown>{note?.content}</ReactMarkdown>
+                <ReactMarkdown>{noteContent}</ReactMarkdown>
               </div>
             </div>
           </div>
-          <Footer path={path} />
+          <Footer note={note} />
         </div>
       </div>
       {verticalMode ? (
@@ -106,7 +93,7 @@ function NoteContainer({ style, verticalMode, overlay, path, scrollToNote }) {
         <></>
       )}
     </main>
-  );
+  )
 }
 
-export default NoteContainer;
+export default NoteContainer
