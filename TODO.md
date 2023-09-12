@@ -7,12 +7,17 @@
 - [x] default index
 - [x] click bookmark doesnt't work
 - [x] links to this note empty?
-- [ ] empty page: 404?
+- [x] empty page: 404?
 - [ ] note index array --> show menu?
 - [ ] mobile display
 - [x] links dont work
 - [x] handle link formats
-- [ ] handle broken links
+- [x] handle broken links
 - [x] actual links don't work
 - [x] replace "scroll" console.log and implement scroll when clicking a link
 - [ ] MANY requests for same file + lazyloading
+- [ ] Highlight open links
+
+
+Icebox
+- [ ] Support links to blocks

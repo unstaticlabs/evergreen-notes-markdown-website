@@ -6,17 +6,13 @@ import App from "./pages/Evergreen.jsx";
 import "./index.scss";
 import Config from "../config.json";
 
-const defaultIndex = (!!Config.bookmarks&&Config.bookmarks.length>0)?Config.bookmarks[0]:".404"
+const defaultIndex = (!!Config.bookmarks && Config.bookmarks.length > 0) ? Config.bookmarks[0] : ".404"
 
 const router = createBrowserRouter(
   [
     {
       path: "/",
-      element: <Navigate to={"/"+defaultIndex} replace />,
-    },
-    {
-      path: "/.404",//TODO: special note ".404"
-      element: <div>404: Not found.</div>,
+      element: <Navigate to={"/" + defaultIndex} replace />,
     },
     { path: "/:entrypoint", element: <App /> },
   ],

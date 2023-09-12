@@ -22,7 +22,7 @@ function NoteContainer({ style, verticalMode, overlay, path, scrollToNote }) {
       const note = await Db.getNote(path);
       setNote({
         ...note,
-        content: `# ${note.title}\n\n${note.content}`.replaceAll(
+        content: `# ${note.title ?? ''}\n\n${note.content}`.replaceAll(
           WIKILINKSregex,
           (_match, index, _block, title) => {
             return `[${title ?? index}](${base}/${encodeURIComponent(index)})`;

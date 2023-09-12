@@ -30,7 +30,9 @@ class DB {
     const data = await Promise.all(
       arrOfPaths.map((path) => {
         const note = index[path];
-        return fetch(`./${note.path}`);
+        if (!!note && !!note.path)
+          return fetch(`./${note.path}`);
+        return fetch('./404.md');
       })
     );
     const json = await Promise.all(data.map((d) => d.text()));
