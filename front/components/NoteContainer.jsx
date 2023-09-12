@@ -7,7 +7,7 @@ import "./NoteContainer.scss";
 import Db from "../db/Db";
 import Footer from "./Footer";
 
-function NoteContainer({ style, verticalMode, overlay, path }) {
+function NoteContainer({ style, verticalMode, overlay, path, scrollToNote }) {
   const [note, setNote] = useState({ index: 0 });
 
   const { entrypoint } = useParams();
@@ -57,7 +57,7 @@ function NoteContainer({ style, verticalMode, overlay, path }) {
         .map((e) => decodeURIComponent(e));
 
       if (currentPaths.includes(notePath) || entrypoint === notePath) {
-        console.log("Should scroll");
+        scrollToNote(notePath);
       } else {
         const index = currentPaths.indexOf(path);
         setSearchParams({

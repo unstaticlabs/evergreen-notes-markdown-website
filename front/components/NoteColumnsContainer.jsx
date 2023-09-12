@@ -14,12 +14,17 @@ function useQuery() {
   return useMemo(() => new URLSearchParams(search), [search]);
 }
 
-function NoteColumnsContainer({ scroll }) {
+function NoteColumnsContainer({ scroll, scrollToAmount }) {
   const { entrypoint } = useParams();
   const [notePaths, setNotePaths] = useState([entrypoint]);
   const [title, setTitle] = useState("");
 
   let query = useQuery();
+
+  const handleScrollToNote = (notePath) => {
+    const index = notePaths.indexOf(notePath);
+    scrollToAmount(index * NOTE_WIDTH)
+  }
 
   useEffect(() => {
     setNotePaths(
@@ -50,9 +55,9 @@ function NoteColumnsContainer({ scroll }) {
               noteTropAGauche ||
               (lastNote &&
                 window.innerWidth +
-                  scroll -
-                  NOTE_WIDTH * (notePaths.length - 1) <
-                  150 &&
+                scroll -
+                NOTE_WIDTH * (notePaths.length - 1) <
+                150 &&
                 scroll < NOTE_WIDTH * (notePaths.length - 2) - 65)
             }
             overlay={
@@ -62,6 +67,7 @@ function NoteColumnsContainer({ scroll }) {
             style={{ left: `${index * 40}px`, right: `-${NOTE_WIDTH}px` }}
             key={path}
             path={path}
+            scrollToNote={handleScrollToNote}
           />
         );
       })}
