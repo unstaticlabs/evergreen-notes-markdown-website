@@ -5,6 +5,7 @@ import { useSearchParams, useParams } from "react-router-dom";
 
 import "./NoteContainer.scss";
 import Db from "../db/Db";
+import Footer from "./Footer";
 
 function NoteContainer({ style, verticalMode, overlay, path }) {
   const [note, setNote] = useState({ index: 0 });
@@ -28,21 +29,42 @@ function NoteContainer({ style, verticalMode, overlay, path }) {
     getNoteAndParseLinks();
   }, [path]);
 
+  const findParentA = (target, count = 5) => {
+    if (target.nodeName.toLowerCase() === "a") {
+      return target;
+    }
+    if (count === 0) {
+      return null;
+    }
+    return findParentA(target.parentNode, count - 1);
+  };
+
   const handleClick = (e) => {
+    const extractPathAndAddToStack = (targetA) => {
+      const notePath = targetA.pathname.slice(1);
+
+      const currentPaths = searchParams
+        .getAll("stacked")
+        .map((e) => decodeURIComponent(e));
+
+      if (currentPaths.includes(notePath) || entrypoint === notePath) {
+        console.log("Should scroll");
+      } else {
+        const index = currentPaths.indexOf(path);
+        setSearchParams({
+          stacked: [...currentPaths.slice(0, index + 1), notePath],
+        });
+      }
+    };
     if (e.target.nodeName.toLowerCase() === "a") {
       if (!e.metaKey && !e.shiftKey && !e.ctrlKey && !e.altKey) {
         e.preventDefault();
-        const notePath = e.target.pathname.slice(1);
-        const currentPaths = searchParams.getAll("stacked");
-        if (currentPaths.includes(notePath) || entrypoint === notePath) {
-          console.log("Should scroll");
-        } else {
-          const index = currentPaths.indexOf(path);
-          setSearchParams({
-            stacked: [...currentPaths.slice(0, index + 1), notePath],
-          });
-        }
+        extractPathAndAddToStack(e.target);
       }
+    } else {
+      e.preventDefault();
+      const target = findParentA(e.target);
+      extractPathAndAddToStack(target);
     }
   };
 
@@ -52,17 +74,22 @@ function NoteContainer({ style, verticalMode, overlay, path }) {
         className="PresentedNote"
         style={{ opacity: verticalMode ? 0 : undefined }}
       >
-        <div className="NoteContainer">
+        <div className="NoteContainer" onClick={handleClick}>
           <div className="PrimaryNote">
             <div>
-              <div className="MarkdownContainer" onClick={handleClick}>
+              <div className="MarkdownContainer">
                 <ReactMarkdown>{note?.content}</ReactMarkdown>
               </div>
             </div>
           </div>
+          <Footer path={path} />
         </div>
       </div>
-      {verticalMode ? <div className="ObscuredLabel">{note?.title}</div> : <></>}
+      {verticalMode ? (
+        <div className="ObscuredLabel">{note?.title}</div>
+      ) : (
+        <></>
+      )}
     </main>
   );
 }
