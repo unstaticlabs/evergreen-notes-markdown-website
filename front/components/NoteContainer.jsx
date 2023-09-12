@@ -43,6 +43,10 @@ function NoteContainer({ style, verticalMode, overlay, path }) {
   };
 
   const handleClick = (e) => {
+    const isLinkRemote = (targetA) => {
+      return new URL(document.baseURI).origin !== new URL(targetA.href, document.baseURI).origin;
+    }
+
     const extractPathAndAddToStack = (targetA) => {
       const notePath = targetA.pathname.slice(
         base.length === 1 ? 1 : base.length + 1
@@ -61,15 +65,20 @@ function NoteContainer({ style, verticalMode, overlay, path }) {
         });
       }
     };
+
     if (e.target.nodeName.toLowerCase() === "a") {
       if (!e.metaKey && !e.shiftKey && !e.ctrlKey && !e.altKey) {
-        e.preventDefault();
-        extractPathAndAddToStack(e.target);
+        if (!isLinkRemote(e.target)) {
+          e.preventDefault();
+          extractPathAndAddToStack(e.target);
+        }
       }
     } else {
       e.preventDefault();
       const target = findParentA(e.target);
-      extractPathAndAddToStack(target);
+      if (target) {
+        extractPathAndAddToStack(target);
+      }
     }
   };
 

@@ -13,5 +13,5 @@
 - [x] links dont work
 - [ ] handle link formats
 - [ ] handle broken links
-- [ ] actual links don't work
+- [x] actual links don't work
 - [ ] MANY requests for same file + lazyloading
