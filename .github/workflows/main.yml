@@ -22,7 +22,6 @@ jobs:
       - name: Install and Build 🔧
         run: |
           yarn
-          cp -r example-notes notes
           yarn build:index
           mv notes public/notes
           yarn build
