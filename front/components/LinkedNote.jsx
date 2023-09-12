@@ -21,9 +21,6 @@ function LinkedNote({ path }) {
     <a href={`${base}/${encodeURIComponent(path)}`}>
       <div className="LinkedNote Backlink">
         <p className="Title">{note.title}</p>
-        <p className="Preview">
-          <span>{note?.content?.substr(0, 140)}</span>
-        </p>
       </div>
     </a>
   );
