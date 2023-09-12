@@ -1,0 +1,10 @@
+#root {
+  min-width: 100vw;
+  /* text-align: center; */
+}
+
+h1 {
+  &.coucou {
+    color: blueviolet;
+  }
+}
