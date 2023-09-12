@@ -14,4 +14,5 @@
 - [ ] handle link formats
 - [ ] handle broken links
 - [x] actual links don't work
+- [ ] replace "scroll" console.log and implement scroll when clicking a link
 - [ ] MANY requests for same file + lazyloading
