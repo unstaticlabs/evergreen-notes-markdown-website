@@ -15,7 +15,7 @@ function Footer({ path }) {
     a();
   }, [path]);
 
-  return (
+  const elem = (
     <div className="Footer">
       <h3 className="BacklinksHeading">Links to this note</h3>
       <div className="BacklinksContainer">
@@ -25,6 +25,8 @@ function Footer({ path }) {
       </div>
     </div>
   );
+
+  return note?.referenced_by?.length === 0 ? <></> : elem
 }
 
 export default Footer;

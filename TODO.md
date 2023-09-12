@@ -6,7 +6,7 @@
 - [ ] improve "Links to this note" summaries
 - [x] default index
 - [ ] click bookmark doesnt't work
-- [ ] links to this note empty?
+- [x] links to this note empty?
 - [ ] empty page: 404?
 - [ ] note index array --> show menu?
 - [ ] mobile display
