@@ -3,7 +3,9 @@ import "./Header.scss";
 import Config from "../../config.json";
 
 function Header() {
-  const base = useHref("/");
+  const _base = useHref("/");
+  const base = _base === '/' ? '' : _base
+
   return (
     <header id="header">
       <h1>{Config.title}</h1>

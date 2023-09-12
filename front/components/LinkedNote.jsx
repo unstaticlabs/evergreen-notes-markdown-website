@@ -7,7 +7,8 @@ import { useHref } from "react-router";
 
 function LinkedNote({ path }) {
   const [note, setNote] = useState({});
-  const base = useHref("/");
+  const _base = useHref("/");
+  const base = _base === '/' ? '' : _base
 
   useEffect(() => {
     const a = async () => {

@@ -13,7 +13,8 @@ function NoteContainer({ style, verticalMode, overlay, path }) {
   const { entrypoint } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const base = useHref("/");
+  const _base = useHref("/");
+  const base = _base === '/' ? '' : _base
 
   useEffect(() => {
     const getNoteAndParseLinks = async () => {

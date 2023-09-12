@@ -10,7 +10,7 @@
 - [ ] empty page: 404?
 - [ ] note index array --> show menu?
 - [ ] mobile display
-- [ ] links dont work
+- [x] links dont work
 - [ ] handle link formats
 - [ ] handle broken links
 - [ ] actual links don't work
