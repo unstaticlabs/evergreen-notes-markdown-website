@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./pages/Evergreen.jsx";
 import "./index.scss";
+import Config from "../config.json";
 
 const router = createBrowserRouter(
   [
@@ -16,7 +17,7 @@ const router = createBrowserRouter(
   {
     basename: window.location.host.endsWith(".github.io")
       ? `/${window.location.pathname.split("/")[1]}`
-      : undefined,
+      : Config.basename,
   }
 );
 

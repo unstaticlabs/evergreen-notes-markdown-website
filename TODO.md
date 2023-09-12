@@ -1,4 +1,4 @@
 - [X] Add "referenced by" card at the bottom of each note
-- [ ] Fix (?) 404 when entrypoint is e.g. `note1.1`
+- [X] Fix (?) 404 when entrypoint is e.g. `note1.1`
 - [X] e2e pipeline (i.e. builduing index.json, building react, serving as Github Pages)
 - [ ] add config (to change title, where notes are stored...) / anything that is hard-coded

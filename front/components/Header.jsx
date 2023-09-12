@@ -1,12 +1,17 @@
+import { useHref } from "react-router";
 import "./Header.scss";
+import Config from "../../config.json";
 
 function Header() {
+  const base = useHref();
   return (
     <header id="header">
-      <h1>My notes</h1>
-      <a className="noteLink" href="/note1">
-        note1
-      </a>
+      <h1>{Config.title}</h1>
+      {(Config.notes || []).forEach((n) => (
+        <a className="noteLink" href={`${base}/${n.link}`}>
+          {n.title}
+        </a>
+      ))}
     </header>
   );
 }

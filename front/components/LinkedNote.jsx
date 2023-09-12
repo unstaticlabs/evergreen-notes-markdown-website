@@ -3,9 +3,11 @@ import "./LinkedNote.scss";
 
 import Db from "../db/Db";
 import { useEffect, useState } from "react";
+import { useHref } from "react-router";
 
 function LinkedNote({ path }) {
   const [note, setNote] = useState({});
+  const base = useHref("/");
 
   useEffect(() => {
     const a = async () => {
@@ -15,7 +17,7 @@ function LinkedNote({ path }) {
   }, [path]);
 
   return (
-    <a href={"/" + path}>
+    <a href={`${base}/${path}`}>
       <div className="LinkedNote Backlink">
         <p className="Title">{note.title}</p>
         <p className="Preview">
