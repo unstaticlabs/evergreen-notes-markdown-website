@@ -1,5 +1,6 @@
 .NoteContainer {
   background-color: white;
+  overflow-x: hidden;
 }
 @media screen and (min-width: 801px) {
   .PresentedNote {
