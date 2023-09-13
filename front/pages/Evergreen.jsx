@@ -1,7 +1,9 @@
 import NotePageRoot from "../components/NotePageRoot";
+
 import "./Evergreen.scss";
 
-function Evergreen() {
+const Evergreen = () => {
+
   return (
     <>
       <NotePageRoot />

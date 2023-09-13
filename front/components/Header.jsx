@@ -1,16 +1,20 @@
-import { useHref } from "react-router";
-import "./Header.scss";
+import { useBase } from "../utils";
+
 import Config from "../../config.json";
 
+import "./Header.scss";
+
 function Header() {
-  const _base = useHref("/");
-  const base = _base === '/' ? '' : _base
+
+  const base = useBase()
 
   return (
     <header id="header">
       <h1>{Config.title}</h1>
       {(Config.bookmarks ?? []).map((noteIndex) => (
-        <a key={noteIndex} className="noteLink" href={`${base}/${noteIndex}`}>
+        <a key={noteIndex}
+          className="noteLink"
+          href={`${base}/${noteIndex}`}>
           {noteIndex}
         </a>
       ))}

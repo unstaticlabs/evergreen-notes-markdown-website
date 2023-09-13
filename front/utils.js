@@ -1,3 +1,5 @@
+import { useHref } from "react-router-dom"
+
 import { WIKILINKSregex as WIKILINKSregex } from "obsidian-index-wikilinks/dist/lib/wikilinkRegex"
 
 export const noteToMarkdownContent = (base, note) => {
@@ -7,4 +9,9 @@ export const noteToMarkdownContent = (base, note) => {
       return `[${title ?? index}](${base}/${encodeURIComponent(index)})`
     }
   )
+}
+
+export const useBase = () => {
+  const base = useHref("/")
+  return base === '/' ? '' : base
 }

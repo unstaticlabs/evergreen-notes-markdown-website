@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
+import { useBase } from "../utils";
+
 import "./LinkedNote.scss";
 
-import { useHref } from "react-router";
+const LinkedNote = ({ noteId, showPopoverForNote }) => {
 
-const LinkedNote = ({ noteId, showPopoverForNote, hidePopover }) => {
-  const _base = useHref("/");
-  const base = _base === '/' ? '' : _base
+  const base = useBase()
 
   return (
     <a
@@ -14,7 +14,7 @@ const LinkedNote = ({ noteId, showPopoverForNote, hidePopover }) => {
         noteId,
         elementPosition: e.target.getBoundingClientRect()
       })}
-      onMouseLeave={() => hidePopover()}
+      onMouseLeave={() => showPopoverForNote()}
     >
       <div className="LinkedNote Backlink">
         <p className="Title">{noteId}</p>

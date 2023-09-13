@@ -3,8 +3,10 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 
 import App from "./pages/Evergreen.jsx";
-import "./index.scss";
+
 import Config from "../config.json";
+
+import "./index.scss";
 
 const defaultIndex = (!!Config.bookmarks && Config.bookmarks.length > 0) ? Config.bookmarks[0] : ".404"
 
