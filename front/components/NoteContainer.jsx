@@ -98,7 +98,7 @@ const NoteContainer = ({ style, verticalMode, overlay, note, noteIdsStack, scrol
               </div>
             </div>
           </div>
-          <Footer note={note} />
+          <Footer note={note} showPopoverForNote={showPopoverForNote} hidePopover={hidePopover} />
         </div>
       </div>
       {verticalMode ? (

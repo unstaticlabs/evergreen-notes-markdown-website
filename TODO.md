@@ -3,8 +3,8 @@
 - [x] e2e pipeline (i.e. builduing index.json, building react, serving as Github Pages)
 - [x] add config (to change title, where notes are stored...) / anything that is hard-coded
 - [x] preview note on link hover
-- [ ] preview note on "referenced by" link hover
-- [ ] improve "Links to this note" summaries
+- [x] preview note on "referenced by" link hover
+- [x] improve "Links to this note" summaries
 - [x] default index
 - [x] click bookmark doesnt't work
 - [x] links to this note empty?
@@ -19,7 +19,7 @@
 - [x] MANY requests for same file + lazyloading
 - [ ] Highlight open links
 - [x] Debugger %25 (et scroll?)
-- [ ] Style referenced by links
+- [x] Style referenced by links
 
 
 Icebox
