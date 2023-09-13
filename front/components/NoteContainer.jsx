@@ -85,7 +85,13 @@ const NoteContainer = ({ style, verticalMode, overlay, note, noteIdsStack, scrol
           <div className="PrimaryNote">
             <div>
               <div className="MarkdownContainer">
-                <ReactMarkdown>{noteContent}</ReactMarkdown>
+                <ReactMarkdown
+                  components={{
+                    a: ({ ...props }) => <a
+                      href={props.href}
+                    >{props.children[0]}</a>
+                  }}
+                >{noteContent}</ReactMarkdown>
               </div>
             </div>
           </div>
