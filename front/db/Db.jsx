@@ -13,14 +13,13 @@ class DB {
 
   constructor() {
     this._notesContent = {}
-    this._index()
   }
 
   async _index() {
-    return this._notesIndex ?? await this._loadIndex()
+    return this._notesIndex ?? await this.loadIndex()
   }
 
-  async _loadIndex() {
+  async loadIndex() {
     const data = await fetch(`./${Config.index}`)
     const json = await data.json()
     this._notesIndex = json
