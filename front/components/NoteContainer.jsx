@@ -40,15 +40,16 @@ const NoteContainer = ({ style, verticalMode, overlay, note, noteIdsStack, scrol
     (new URL(document.baseURI).origin !== new URL(targetA.href, document.baseURI).origin)
 
   const extractPathAndAddToStack = (targetA) => {
-    const notePath = targetA.pathname.slice(
+    const linkNoteId = decodeURIComponent(targetA.pathname.slice(
       base.length === 1 ? 1 : base.length + 1
-    )
-    if (noteIdsStack.includes(notePath) || entrypoint === notePath) {
-      scrollToNote(notePath)
+    ))
+
+    if (noteIdsStack.includes(linkNoteId) || entrypoint === linkNoteId) {
+      scrollToNote(linkNoteId)
     } else {
       const index = noteIdsStack.indexOf(note.id);
       setSearchParams({
-        stacked: [...noteIdsStack.slice(0, index + 1), notePath],
+        stacked: [...noteIdsStack.slice(0, index + 1), linkNoteId],
       })
     }
   }

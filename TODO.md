@@ -17,7 +17,7 @@
 - [x] replace "scroll" console.log and implement scroll when clicking a link
 - [x] MANY requests for same file + lazyloading
 - [ ] Highlight open links
-- [ ] Debugger %25 (et scroll?)
+- [x] Debugger %25 (et scroll?)
 - [ ] Style referenced by links
 
 
