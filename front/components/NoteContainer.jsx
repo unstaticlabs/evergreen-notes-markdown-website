@@ -2,13 +2,13 @@
 import { useEffect, useState } from "react"
 import ReactMarkdown from "react-markdown"
 import { useSearchParams, useParams, useHref } from "react-router-dom"
-import { WIKILINKSregex as WIKILINKSregex } from "obsidian-index-wikilinks/dist/lib/wikilinkRegex"
 
 import Footer from "./Footer"
+import { noteToMarkdownContent } from "../utils"
 
 import "./NoteContainer.scss"
 
-const NoteContainer = ({ style, verticalMode, overlay, note, noteIdsStack, scrollToNote }) => {
+const NoteContainer = ({ style, verticalMode, overlay, note, noteIdsStack, scrollToNote, hidePopover, showPopoverForNote }) => {
 
   const [noteContent, setNoteContent] = useState("Loading...")
 
@@ -19,13 +19,7 @@ const NoteContainer = ({ style, verticalMode, overlay, note, noteIdsStack, scrol
   const base = _base === '/' ? '' : _base
 
   useEffect(() => {
-    setNoteContent(
-      `# ${note.title ?? ''}\n\n${note.content}`.replaceAll(
-        WIKILINKSregex,
-        (_match, index, _block, title) => {
-          return `[${title ?? index}](${base}/${encodeURIComponent(index)})`
-        }
-      ))
+    setNoteContent(noteToMarkdownContent(base, note))
   }, [note, base])
 
   useEffect(() => {
@@ -43,10 +37,14 @@ const NoteContainer = ({ style, verticalMode, overlay, note, noteIdsStack, scrol
   const isLinkRemote = (targetA) =>
     (new URL(document.baseURI).origin !== new URL(targetA.href, document.baseURI).origin)
 
-  const extractPathAndAddToStack = (targetA) => {
-    const linkNoteId = decodeURIComponent(targetA.pathname.slice(
+  const extractNoteId = (pathname) => {
+    return decodeURIComponent(pathname.slice(
       base.length === 1 ? 1 : base.length + 1
     ))
+  }
+
+  const extractPathAndAddToStack = (targetA) => {
+    const linkNoteId = extractNoteId(targetA.pathname);
 
     if (noteIdsStack.includes(linkNoteId) || entrypoint === linkNoteId) {
       scrollToNote(linkNoteId)
@@ -89,6 +87,11 @@ const NoteContainer = ({ style, verticalMode, overlay, note, noteIdsStack, scrol
                   components={{
                     a: ({ ...props }) => <a
                       href={props.href}
+                      onMouseEnter={(e) => showPopoverForNote({
+                        noteId: extractNoteId(new URL(props.href, document.baseURI).pathname),
+                        elementPosition: e.target.getBoundingClientRect()
+                      })}
+                      onMouseLeave={() => hidePopover()}
                     >{props.children[0]}</a>
                   }}
                 >{noteContent}</ReactMarkdown>

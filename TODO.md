@@ -2,7 +2,8 @@
 - [x] Fix (?) 404 when entrypoint is e.g. `note1.1`
 - [x] e2e pipeline (i.e. builduing index.json, building react, serving as Github Pages)
 - [x] add config (to change title, where notes are stored...) / anything that is hard-coded
-- [ ] preview note on link hover
+- [x] preview note on link hover
+- [ ] preview note on "referenced by" link hover
 - [ ] improve "Links to this note" summaries
 - [x] default index
 - [x] click bookmark doesnt't work

@@ -5,6 +5,7 @@ import { useLocation, useParams } from "react-router-dom";
 import "./NoteColumnsContainer.scss";
 import NoteContainer from "./NoteContainer";
 import Db from "../db/Db";
+import Popover from "./Popover";
 
 const NOTE_WIDTH = 585;
 
@@ -19,6 +20,7 @@ const NoteColumnsContainer = ({ scroll, scrollToAmount }) => {
   const [noteIds, setNoteIds] = useState([entrypoint]);
   const [title, setTitle] = useState("");
   const [notes, setNotes] = useState([]);
+  const [popoverData, setPopoverData] = useState(null);
 
   let query = useQuery();
 
@@ -50,12 +52,12 @@ const NoteColumnsContainer = ({ scroll, scrollToAmount }) => {
   return (
     <div className="NoteColumnsContainer">
       {notes.map((note, index) => {
-        const noteTropAGauche = scroll > NOTE_WIDTH * (index + 1) - 80;
+        const noteIsTooFarOnTheLeft = scroll > NOTE_WIDTH * (index + 1) - 80;
         const lastNote = index === noteIds.length - 1;
         return (
           <NoteContainer
             verticalMode={
-              noteTropAGauche ||
+              noteIsTooFarOnTheLeft ||
               (lastNote &&
                 window.innerWidth +
                 scroll -
@@ -71,10 +73,13 @@ const NoteColumnsContainer = ({ scroll, scrollToAmount }) => {
             note={note}
             noteIdsStack={noteIds.slice(1)}
             scrollToNote={handleScrollToNote}
+            hidePopover={() => setPopoverData(null)}
+            showPopoverForNote={data => setPopoverData(data)}
             key={note.path ?? '.404'}
           />
         );
       })}
+      {popoverData ? <Popover elementPosition={popoverData.elementPosition} noteId={popoverData.noteId} /> : <></>}
     </div>
   );
 }
