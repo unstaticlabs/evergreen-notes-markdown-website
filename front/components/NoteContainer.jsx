@@ -28,6 +28,10 @@ const NoteContainer = ({ style, verticalMode, overlay, note, noteIdsStack, scrol
       ))
   }, [note, base])
 
+  useEffect(() => {
+    scrollToNote();
+  }, [])
+
   const findParentA = (target, count = 5) => {
     if (target.nodeName.toLowerCase() === "a")
       return target

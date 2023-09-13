@@ -24,7 +24,7 @@ const NoteColumnsContainer = ({ scroll, scrollToAmount }) => {
 
   const handleScrollToNote = (notePath) => {
     const index = noteIds.indexOf(notePath);
-    scrollToAmount(index * NOTE_WIDTH)
+    scrollToAmount((index === -1 ? noteIds.length : index) * NOTE_WIDTH)
   }
 
   useEffect(() => {
