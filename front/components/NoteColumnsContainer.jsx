@@ -71,7 +71,7 @@ const NoteColumnsContainer = ({ scroll, scrollToAmount }) => {
             }
             style={{ left: `${index * 40}px`, right: `-${NOTE_WIDTH}px` }}
             note={note}
-            noteIdsStack={noteIds.slice(0)}
+            noteIdsStack={noteIds}
             scrollToNote={handleScrollToNote}
             showPopoverForNote={data => setPopoverData(data)}
             key={note.path ?? '.404'}

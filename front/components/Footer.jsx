@@ -1,16 +1,26 @@
 /* eslint-disable react/prop-types */
+import { useBase } from "../utils"
 import "./Footer.scss"
 
-import LinkedNote from "./LinkedNote"
+import NoteLink from "./NoteLink"
 
-const Footer = ({ note, showPopoverForNote }) => {
+const Footer = ({ note, showPopoverForNote, noteIdsStack, scrollToNote }) => {
+
+  const base = useBase()
 
   const elem = (
     <div className="Footer">
       <h3 className="BacklinksHeading">Links to this note</h3>
       <div className="BacklinksContainer">
-        {note?.referenced_by?.map((originNote) => (
-          <LinkedNote key={originNote} noteId={originNote} showPopoverForNote={showPopoverForNote} />
+        {note?.referenced_by?.map((backlinkNote) => (
+          <NoteLink
+            key={backlinkNote}
+            href={`${base}/${encodeURIComponent(backlinkNote)}`}
+            openNoteId={note.id}
+            noteIdsStack={noteIdsStack}
+            scrollToNote={scrollToNote}
+            showPopoverForNote={showPopoverForNote}
+            text={backlinkNote} />
         ))}
       </div>
     </div>
