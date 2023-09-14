@@ -9,6 +9,10 @@
   z-index: 200;
   filter: drop-shadow(rgba(0, 0, 0, 0.08) 0px 0px 10px) drop-shadow(rgba(0, 0, 0, 0.04) 0px 20px 50px) drop-shadow(rgba(0, 0, 0, 0.15) 0px 0px 1px);
 
+  a {
+    text-decoration: none;
+  }
+
   .HoveredNote {
     --width: calc((625px) * var(--scaleFactor));
     --scaleFactor: 0.8;

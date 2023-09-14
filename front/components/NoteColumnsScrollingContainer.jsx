@@ -1,27 +1,18 @@
-import { useState, useRef } from "react";
+import { useRef } from "react"
 
-import "./NoteColumnsScrollingContainer.scss";
-import NoteColumnsContainer from "./NoteColumnsContainer";
+import NoteColumnsContainer from "./NoteColumnsContainer"
 
-function NoteColumnsScrollingContainer() {
-  const [scroll, setScroll] = useState(0);
+import "./NoteColumnsScrollingContainer.scss"
+
+const NoteColumnsScrollingContainer = () => {
+
   const scrollingContainerRef = useRef(null)
 
-  const handleScrollToAmount = (amount) => {
-    scrollingContainerRef.current.scroll(amount, 0)
-  }
-
   return (
-    <main
-      ref={scrollingContainerRef}
-      className="NoteColumnsScrollingContainer"
-      onScroll={(e) => {
-        setScroll(e.currentTarget.scrollLeft)
-      }}
-    >
-      <NoteColumnsContainer scroll={scroll} scrollToAmount={handleScrollToAmount} />
+    <main ref={scrollingContainerRef} className="NoteColumnsScrollingContainer">
+      <NoteColumnsContainer scrollRef={scrollingContainerRef} />
     </main>
-  );
+  )
 }
 
-export default NoteColumnsScrollingContainer;
+export default NoteColumnsScrollingContainer
