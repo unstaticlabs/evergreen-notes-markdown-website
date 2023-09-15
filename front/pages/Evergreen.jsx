@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
+
 import Db from "../db/Db"
 
-import NotePageRoot from "../components/NotePageRoot";
+import Header from "../components/Header";
+import NoteColumnsScrollingContainer from "../components/NoteColumnsScrollingContainer";
 
 import "./Evergreen.scss";
-import { useEffect, useState } from "react";
 
 const Evergreen = () => {
 
@@ -17,7 +19,10 @@ const Evergreen = () => {
 
   return (
     <>
-      {loading || <NotePageRoot />}
+      {loading || <main className="NotePageRoot">
+        <Header />
+        <NoteColumnsScrollingContainer />
+      </main>}
     </>
   );
 }

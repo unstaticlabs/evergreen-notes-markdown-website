@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react"
+import { useBase, noteToMarkdownContent } from "../utils"
+
 import ReactMarkdown from "react-markdown"
-
-import { useBase, noteToMarkdownContent } from "../utils";
-
 import Footer from "./Footer"
 import NoteLink from "./NoteLink"
 
@@ -16,6 +15,7 @@ const NoteContainer = ({ style, verticalMode, overlay, note, noteIdsStack, scrol
   const base = useBase()
 
   useEffect(() => {
+    if (note.content === undefined) return
     setNoteContent(noteToMarkdownContent(base, note))
   }, [note, base])
 

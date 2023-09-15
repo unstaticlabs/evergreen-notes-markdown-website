@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 
-import { useBase } from "../utils";
+import { useBase } from "../utils"
 
 import "./NoteLink.scss"
 
@@ -32,7 +32,7 @@ const NoteLink = ({ href, text, openNoteId, noteIdsStack, scrollToNote, showPopo
     setIsTargetOpen(noteIdsStack.includes(targetNoteId))
   }, [noteIdsStack, targetNoteId])
 
-  const extractPathAndAddToStack = (mouseEvent) => {
+  const extractPathAndAddToStack = useCallback((mouseEvent) => {
     if (isRemote) return
     mouseEvent.preventDefault()
     if (isTargetOpen) {
@@ -43,19 +43,22 @@ const NoteLink = ({ href, text, openNoteId, noteIdsStack, scrollToNote, showPopo
         stacked: [...noteIdsStack.slice(1, from + 1), targetNoteId],
       })
     }
-  }
+  }, [isRemote, isTargetOpen, noteIdsStack, targetNoteId, openNoteId, scrollToNote, setSearchParams])
 
-  const onMouseEnter = (e) => {
+  const onMouseEnter = useCallback((e) => {
+    console.log('on mouse Enter');
     if (isRemote) return
     showPopoverForNote({
       noteId: targetNoteId,
       elementPosition: e.target.getBoundingClientRect()
     })
-  }
-  const onMouseLeave = () => {
+  }, [isRemote, showPopoverForNote, targetNoteId])
+
+  const onMouseLeave = useCallback(() => {
+    console.log('on mouse Leave');
     if (isRemote) return
     showPopoverForNote()
-  }
+  }, [isRemote, showPopoverForNote])
 
   return (
     <a

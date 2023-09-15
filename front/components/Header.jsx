@@ -1,10 +1,10 @@
-import { useBase } from "../utils";
+import { useBase } from "../utils"
 
-import Config from "../../config.json";
+import Config from "../../config.json"
 
-import "./Header.scss";
+import "./Header.scss"
 
-function Header() {
+const Header = () => {
 
   const base = useBase()
 
@@ -14,12 +14,11 @@ function Header() {
       {(Config.bookmarks ?? []).map((noteIndex) => (
         <a key={noteIndex}
           className="noteLink"
-          href={`${base}/${noteIndex}`}>
-          {noteIndex}
-        </a>
+          href={`${base}/${noteIndex}`}
+        >{noteIndex}</a>
       ))}
     </header>
-  );
+  )
 }
 
-export default Header;
+export default Header
