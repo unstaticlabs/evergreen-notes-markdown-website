@@ -1,9 +1,11 @@
 import Config from "../../config.json"
 
 const _loadNoteContent = async (note) => {
-  return await (
-    (!!note && !!note.path) ? fetch(`./${note.path}`) : fetch('./404.md')
-  )
+  let path = '404.md'
+  if (!!note && !!note.path) {
+    path = note.path.split("/").map(k => encodeURIComponent(k)).join("/")
+  }
+  return await fetch(`./${path}`)
 }
 
 class DB {
