@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useCallback, useEffect, useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 
 import { useBase } from "../utils"
 
@@ -10,6 +10,7 @@ const isLinkRemote = (href) =>
   (new URL(document.baseURI).origin !== new URL(href, document.baseURI).origin)
 
 const NoteLink = ({ href, text, openNoteId, noteIdsStack, scrollToNote, showPopoverForNote }) => {
+  const navigate = useNavigate();
 
   const [isRemote, setIsRemote] = useState(false);
   const [isTargetOpen, setIsTargetOpen] = useState(false);
@@ -35,6 +36,11 @@ const NoteLink = ({ href, text, openNoteId, noteIdsStack, scrollToNote, showPopo
   const extractPathAndAddToStack = useCallback((mouseEvent) => {
     if (isRemote) return
     mouseEvent.preventDefault()
+    const isSmallScreen = window.innerWidth < 800;
+    if (isSmallScreen) {
+      navigate(`/${encodeURIComponent(targetNoteId)}`)
+      return;
+    }
     if (isTargetOpen) {
       scrollToNote(targetNoteId)
     } else {
@@ -43,7 +49,7 @@ const NoteLink = ({ href, text, openNoteId, noteIdsStack, scrollToNote, showPopo
         stacked: [...noteIdsStack.slice(1, from + 1), targetNoteId],
       })
     }
-  }, [isRemote, isTargetOpen, noteIdsStack, targetNoteId, openNoteId, scrollToNote, setSearchParams])
+  }, [isRemote, isTargetOpen, navigate, targetNoteId, scrollToNote, noteIdsStack, openNoteId, setSearchParams])
 
   const onMouseEnter = useCallback((e) => {
     console.log('on mouse Enter');
