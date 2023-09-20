@@ -32,7 +32,10 @@ const NoteContainer = ({ style, verticalMode, overlay, note, noteIdsStack, scrol
       >
         <div className="NoteContainer">
           <div className="PrimaryNote">
-            <div>
+            <div style={{
+              height: '100%',
+              overflow: 'hidden',
+            }}>
               <div className="MarkdownContainer">
                 <ReactMarkdown
                   components={{
