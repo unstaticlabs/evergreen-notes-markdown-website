@@ -52,7 +52,7 @@ const NoteLink = ({ href, text, openNoteId, noteIdsStack, scrollToNote, showPopo
   }, [isRemote, isTargetOpen, navigate, targetNoteId, scrollToNote, noteIdsStack, openNoteId, setSearchParams])
 
   const onMouseEnter = useCallback((e) => {
-    console.log('on mouse Enter');
+    // console.log('on mouse Enter');
     if (isRemote) return
     showPopoverForNote({
       noteId: targetNoteId,
@@ -61,7 +61,7 @@ const NoteLink = ({ href, text, openNoteId, noteIdsStack, scrollToNote, showPopo
   }, [isRemote, showPopoverForNote, targetNoteId])
 
   const onMouseLeave = useCallback(() => {
-    console.log('on mouse Leave');
+    // console.log('on mouse Leave');
     if (isRemote) return
     showPopoverForNote()
   }, [isRemote, showPopoverForNote])

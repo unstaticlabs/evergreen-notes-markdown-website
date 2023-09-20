@@ -17,6 +17,8 @@ const NoteColumnsContainer = ({ scrollRef }) => {
   const [noteIds, setNoteIds] = useState([entrypoint])
   const [title, setTitle] = useState("Loading notes...")
   const [notes, setNotes] = useState([])
+  const [shownNotes, setShownNotes] = useState([])
+  const [smallScreen, setSmallScreen] = useState(false)
   const [popoverData, setPopoverData] = useState()
   const [scroll, setScroll] = useState(0)
 
@@ -50,22 +52,37 @@ const NoteColumnsContainer = ({ scrollRef }) => {
   }, [noteIds])
 
   useEffect(() => {
-    setTitle(notes.length === 1 ?
-      notes[0].title : notes.map((n) => n.title).join(" | ")
+    setShownNotes(smallScreen ? notes.slice(-1) : [...notes])
+  }, [notes, smallScreen])
+
+  useEffect(() => {
+    setTitle(shownNotes.length === 1 ?
+      shownNotes[0].title : shownNotes.map((n) => n.title).join(" | ")
     );
-  }, [notes])
+  }, [shownNotes])
 
   useEffect(() => {
     document.title = title;
   }, [title])
 
   useEffect(() => {
-    console.log('rererender')
+    // console.log('rererender')
+
+    function handleResize() {
+      const isSmallScreen = window.innerWidth < 800;
+      setSmallScreen(isSmallScreen)
+    }
+    handleResize()
+
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
   })
 
   return (
     <div className="NoteColumnsContainer">
-      {notes.map((note, index) => {
+      {shownNotes.map((note, index) => {
         const noteIsTooFarOnTheLeft = scroll > NOTE_WIDTH * (index + 1) - 80
         const lastNote = index === noteIds.length - 1
         const noteIsTooFarOnTheRight = lastNote &&
