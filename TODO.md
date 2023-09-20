@@ -1,4 +1,4 @@
-- [ ] **mobile display**
+- [~] **mobile display**
 - [ ] Fix blink (eg on Highlight open links)
 - [ ] Sort index/notes by pagerank score and keep them sorted whenever displayed
 - [ ] Remove broken links directly from index (?) (problem is my hidden notes will show up here)
