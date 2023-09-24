@@ -71,7 +71,7 @@ const NoteLink = ({ href, text, openNoteId, noteIdsStack, scrollToNote, showPopo
       onClick={extractPathAndAddToStack} href={href} rel="noreferrer"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className={"NoteLink " + (isTargetOpen ? 'open' : '')}
+      className={"NoteLink " + (isTargetOpen ? 'open ' : '') + (isRemote ? 'remote-link ' : '')}
       target="_blank"
     >{text}</a>
   )
