@@ -12,10 +12,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run update-build-time && vite build",
     "build:index": "index-wikilinks notes notes/index.json",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "update-build-time": "node -e 'console.log(`export const buildInfo = { buildDate: ${new Date(Date.now()).getTime().toString()} }`)' > front/db/buildInfo.js"
   },
   "license": "MIT",
   "dependencies": {

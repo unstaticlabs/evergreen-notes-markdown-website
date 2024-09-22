@@ -1,11 +1,12 @@
 import Config from "../../config.json"
+import { buildInfo } from "./buildInfo"
 
 const _loadNoteContent = async (note) => {
   let path = '404.md'
   if (!!note && !!note.path) {
     path = note.path.split("/").map(k => encodeURIComponent(k)).join("/")
   }
-  return await fetch(`./${path}`)
+  return await fetch(`./${path}?t=${buildInfo.buildDate}`)
 }
 
 class DB {
