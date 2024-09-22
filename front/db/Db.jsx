@@ -23,7 +23,7 @@ class DB {
   }
 
   async loadIndex() {
-    const data = await fetch(`./${Config.index}`)
+    const data = await fetch(`./${Config.index}?t=${buildInfo.buildDate}`)
     const json = await data.json()
     this._notesIndex = json
     return this._notesIndex
