@@ -11,11 +11,11 @@ const Header = () => {
   return (
     <header id="header">
       <h1>{Config.title}</h1>
-      {(Config.bookmarks ?? []).map((noteIndex) => (
-        <a key={noteIndex}
+      {(Config.bookmarks ?? []).map((noteTitle) => (
+        <a key={noteTitle}
           className="noteLink"
-          href={`${base}/${noteIndex}`}
-        >{noteIndex}</a>
+          href={`${base}/${noteTitle.toLowerCase()}`}
+        >{noteTitle}</a>
       ))}
     </header>
   )

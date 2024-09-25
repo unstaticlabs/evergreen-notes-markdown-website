@@ -8,7 +8,7 @@ import Config from "../config.json";
 
 import "./index.scss";
 
-const defaultIndex = (!!Config.bookmarks && Config.bookmarks.length > 0) ? Config.bookmarks[0] : ".404"
+const defaultIndex = (!!Config.bookmarks && Config.bookmarks.length > 0) ? Config.bookmarks[0].toLowerCase() : ".404"
 
 const router = createBrowserRouter(
   [

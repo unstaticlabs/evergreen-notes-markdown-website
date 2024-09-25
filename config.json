@@ -2,6 +2,7 @@
   "title": "My notes",
   "index": "notes/index.json",
   "bookmarks": [
+    "Note1",
     "note1"
   ]
 }
