@@ -3,6 +3,8 @@ import { useEffect, useState } from "react"
 import { useBase, noteToMarkdownContent } from "../utils"
 
 import ReactMarkdown from "react-markdown"
+import remarkGfm from 'remark-gfm'
+
 import Footer from "./Footer"
 import NoteLink from "./NoteLink"
 
@@ -38,15 +40,16 @@ const NoteContainer = ({ style, verticalMode, overlay, note, noteIdsStack, scrol
             }}>
               <div className="MarkdownContainer">
                 <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
                   components={{
                     a: ({ ...props }) =>
                       <NoteLink
-                        href={props.href}
+                        {...props}
                         openNoteId={note.id}
                         noteIdsStack={noteIdsStack}
                         scrollToNote={scrollToNote}
                         showPopoverForNote={showPopoverForNote}
-                        text={props.children[0]} />
+                      />
                   }}>{noteContent}</ReactMarkdown>
               </div>
             </div>
