@@ -20,7 +20,7 @@ const Footer = ({ note, showPopoverForNote, noteIdsStack, scrollToNote }) => {
             noteIdsStack={noteIdsStack}
             scrollToNote={scrollToNote}
             showPopoverForNote={showPopoverForNote}
-            text={backlinkNote} />
+            children={backlinkNote} />
         ))}
       </div>
     </div>
