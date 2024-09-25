@@ -26,7 +26,7 @@ const NoteLink = ({ href, text, openNoteId, noteIdsStack, scrollToNote, showPopo
   useEffect(() => {
     setTargetNoteId(decodeURIComponent(href.slice(
       base.length === 1 ? 1 : base.length + 1
-    )))
+    )).toLowerCase())
   }, [href, base])
 
   useEffect(() => {
