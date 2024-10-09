@@ -13,13 +13,14 @@ const NOTE_WIDTH = 585
 
 const NoteColumnsContainer = ({ scrollRef }) => {
   const { entrypoint } = useParams()
+  const getNoteIds = (r, q) => [r, ...q.getAll("stacked")].map((e) => decodeURIComponent(e).toLowerCase())
   const query = useSearchParams()[0]
-  const [noteIds, setNoteIds] = useState([entrypoint])
+  const [noteIds, setNoteIds] = useState(getNoteIds(entrypoint, query))
   const [title, setTitle] = useState("Loading notes...")
   const [notes, setNotes] = useState([])
   const [shownNotes, setShownNotes] = useState([])
   const [smallScreen, setSmallScreen] = useState(false)
-  const [popoverData, setPopoverData] = useState()
+  const [popoverData,] = useState()
   const [scroll, setScroll] = useState(0)
 
   const scrollToAmount = useCallback((amount) => {
@@ -38,11 +39,8 @@ const NoteColumnsContainer = ({ scrollRef }) => {
     const index = noteIds.indexOf(notePath)
     scrollToAmount((index === -1 ? noteIds.length : index) * NOTE_WIDTH)
   }, [noteIds, scrollToAmount])
-
   useEffect(() => {
-    setNoteIds(
-      [entrypoint, ...query.getAll("stacked")].map((e) => decodeURIComponent(e))
-    )
+    setNoteIds(getNoteIds(entrypoint, query))
   }, [entrypoint, query])
 
   useEffect(() => {
