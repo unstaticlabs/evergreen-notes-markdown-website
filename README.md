@@ -34,7 +34,11 @@ It requires a separate, automated process in order to build an index of backlink
 
 ### Developing
 
-TODO
+```bash
+npm install
+npm run build:index
+npm run dev
+```
 
 ### Building
 

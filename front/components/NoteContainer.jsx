@@ -4,6 +4,9 @@ import { useBase, noteToMarkdownContent } from "../utils"
 
 import ReactMarkdown from "react-markdown"
 import remarkGfm from 'remark-gfm'
+import remarkMermaidPlugin from 'remark-mermaid-plugin';
+import rehypeRaw from "rehype-raw";
+import rehypeStringify from "rehype-stringify";
 
 import Footer from "./Footer"
 import NoteLink from "./NoteLink"
@@ -40,7 +43,8 @@ const NoteContainer = ({ style, verticalMode, overlay, note, noteIdsStack, scrol
             }}>
               <div className="MarkdownContainer">
                 <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
+                  remarkPlugins={[remarkGfm, remarkMermaidPlugin]}
+                  rehypePlugins={[rehypeRaw, rehypeStringify]}
                   components={{
                     a: ({ ...props }) =>
                       <NoteLink
