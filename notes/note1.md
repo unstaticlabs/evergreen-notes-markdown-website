@@ -15,3 +15,4 @@
 - [[very long note]]
 - [[Very Long Note]]
 - [[remark]]
+- [[mermaid]]
