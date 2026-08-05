@@ -10,7 +10,12 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # the deploy step pushes the build to the gh-pages branch
+      contents: read
+      pages: write # deploy-pages publishes the artifact to Pages
+      id-token: write # deploy-pages authenticates with an OIDC token
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v7
@@ -19,6 +24,11 @@ jobs:
         with:
           node-version: 22
 
+      - name: Configure Pages ⚙️
+        uses: actions/configure-pages@v6
+        with:
+          enablement: true # switches Pages from branch-based to Actions deployment
+
       - name: Install and Build 🔧
         run: |
           yarn
@@ -26,8 +36,11 @@ jobs:
           mv notes public/notes
           yarn build
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Upload artifact 📦
+        uses: actions/upload-pages-artifact@v5
         with:
-          branch: gh-pages
-          folder: www
+          path: www
+
+      - name: Deploy 🚀
+        id: deployment
+        uses: actions/deploy-pages@v5
