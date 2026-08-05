@@ -9,11 +9,11 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # the deploy step pushes the build to the gh-pages branch
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v7 # You must set persist-credentials to false in most cases for the deployment to work correctly.
-        with:
-          persist-credentials: false
+        uses: actions/checkout@v7
 
       - uses: actions/setup-node@v6
         with:
@@ -26,14 +26,8 @@ jobs:
           mv notes public/notes
           yarn build
 
-      - name: Install SSH Client 🔑
-        uses: webfactory/ssh-agent@v0.10.0
-        with:
-          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
-
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          SSH: true
-          BRANCH: gh-pages
-          FOLDER: www
+          branch: gh-pages
+          folder: www
