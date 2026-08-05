@@ -27,7 +27,7 @@ jobs:
           yarn build
 
       - name: Install SSH Client 🔑
-        uses: webfactory/ssh-agent@v0.5.1
+        uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ secrets.DEPLOY_KEY }}
 
