@@ -2,5 +2,18 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
   "dependencyDashboard": true,
-  "automerge": false
+  "automerge": false,
+  "packageRules": [
+    {
+      "description": "Group patch and minor updates into one weekly pull request. This is the rule that keeps the GitLab gitops queue at two open merge requests instead of two hundred.",
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "weekly patch and minor updates",
+      "schedule": ["before 6am on monday"]
+    },
+    {
+      "description": "Majors always get their own pull request with a label, never grouped. They are the ones worth reading.",
+      "matchUpdateTypes": ["major"],
+      "labels": ["renovate/major-update"]
+    }
+  ]
 }
