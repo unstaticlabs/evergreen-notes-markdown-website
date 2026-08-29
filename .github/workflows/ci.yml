@@ -16,7 +16,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
 
       # The same build the deploy workflow runs, without the deploy.
       # --frozen-lockfile fails when package.json and yarn.lock disagree.
