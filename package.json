@@ -23,7 +23,7 @@
     "obsidian-index-wikilinks": "https://github.com/unstaticlabs/evergreen-notes-index-wikilinks#d1bc5109d328bc3264e0f4782b8e613e7ae1e67a",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-markdown": "^9.0.1",
+    "react-markdown": "^10.0.0",
     "react-router-dom": "^6.15.0",
     "rehype-raw": "^7.0.0",
     "rehype-stringify": "^10.0.1",
